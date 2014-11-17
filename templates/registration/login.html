@@ -17,13 +17,10 @@
             <li><a href="#">Szukaj</a></li>
             <li><a href="#">Książki</a></li>
             <li><a href="#">Kontakt</a></li>
-			{% if user.is_authenticated %}
-			<li>Zalogowany użytkownik: <b>{{user.name}}</b>    <a href="/logout/">wyloguj się</a> </li>   
-			{% else %}
-            <li><a href="login/">Logowanie</a></li>
-			<li><a href="register/">Rejestracja</a></li>
-			{% endif %}
-		</ul>
+			<li><a href="login/">Logowanie</a></li>
+            <li><a href="register/">Rejestracja</a></li>
+           
+    	</ul>
     </div> <!-- end of menu -->
     
     <div id="templatemo_header">
@@ -65,19 +62,13 @@
         <div id="templatemo_content_right">
 
 
-            <div class="templatemo_product_box">
-            	<h1><span></span></h1>
-            	<!-- <img src="/static/images/#" alt="image" /> -->
-                <div class="product_info">
-                	<p></p>
-                    <h3></h3>
-                    <div class="buy_now_button"><a href="#">Kup teraz</a></div>
-                    <div class="detail_button"><a href="#">Więcej</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-
-            <div class="cleaner_with_height">&nbsp;</div>
+            <fieldset>
+				<form method="post" action=".">{% csrf_token %}
+					<div style="text-align:left";>{{ form.as_p }}</div>
+					<input type="hidden" name="next" value="/" />
+					<input type="submit" value="Logowanie"/>    <input type="reset" value="Wartości domyślne"/>
+				</form>
+			</fieldset>
 
             <!-- <a href="subpage.html"><img src="images/templatemo_ads.jpg" alt="ads" /></a>-->
         </div> <!-- end of content right -->
