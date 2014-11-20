@@ -17,13 +17,10 @@
             <li><a href="#">Szukaj</a></li>
             <li><a href="#">Książki</a></li>
             <li><a href="#">Kontakt</a></li>
-			{% if user.is_authenticated %}
-			<li>Zalogowany użytkownik: <b>{{user}}</b>    <a href="/logout/">wyloguj się</a> </li> 			
-			{% else %}
-            <li><a href="login/">Logowanie</a></li>
-			<li><a href="register/">Rejestracja</a></li>
-			{% endif %}
-		</ul>
+			<li><a href="login/">Logowanie</a></li>
+            <li><a href="/register/">Rejestracja</a></li>
+           
+    	</ul>
     </div> <!-- end of menu -->
     
     <div id="templatemo_header">
@@ -31,7 +28,7 @@
         	<p>
                 &nbsp
         	</p>
-			<a href="#" style="margin-left: 50px;">Czytaj więcej</a>
+			<a href="subpage.html" style="margin-left: 50px;">Czytaj więcej</a>
         </div>
         
         
@@ -39,7 +36,7 @@
         	<ul>
                 &nbsp
             </ul>
-            <a href="#" style="margin-left: 50px;">Czytaj więcej</a>
+            <a href="subpage.html" style="margin-left: 50px;">Czytaj więcej</a>
         </div>
     </div> <!-- end of header -->
     
@@ -64,20 +61,8 @@
         
         <div id="templatemo_content_right">
 
-
-            <div class="templatemo_product_box">
-            	<h1><span></span></h1>
-            	<!-- <img src="/static/images/#" alt="image" /> -->
-                <div class="product_info">
-                	<p></p>
-                    <h3></h3>
-                    <div class="buy_now_button"><a href="#">Kup teraz</a></div>
-                    <div class="detail_button"><a href="#">Więcej</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-
-            <div class="cleaner_with_height">&nbsp;</div>
+			<h2><center>Zostałeś zarejestrowany, twój login to: {{username}}</center>
+			<center><h3>Dziękujemy za rejestrację. Możesz się teraz <a href="/login/">zalogować</a> lub wrócić na <a href="/">stronę głównę</a>.</h3></center>
 
             <!-- <a href="subpage.html"><img src="images/templatemo_ads.jpg" alt="ads" /></a>-->
         </div> <!-- end of content right -->

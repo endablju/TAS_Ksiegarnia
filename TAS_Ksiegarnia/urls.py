@@ -7,11 +7,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^admin/', include(admin.site.urls)),
+	(r'^register/$','books.views.register_page'),
     (r'^/?$', 'books.views.index'),
 	(r'^login/$','django.contrib.auth.views.login'),
     #(r'^logout/$',logout_page),
 	(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-	#(r'^register/$',register_page),
+	
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

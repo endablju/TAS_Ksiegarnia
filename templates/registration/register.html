@@ -17,8 +17,8 @@
             <li><a href="#">Szukaj</a></li>
             <li><a href="#">Książki</a></li>
             <li><a href="#">Kontakt</a></li>
-			<li><a href="#">Logowanie</a></li>
-            <li><a href="#">Rejestracja</a></li>
+			<li><a href="/login/">Logowanie</a></li>
+            <li><a href="/register/">Rejestracja</a></li>
            
     	</ul>
     </div> <!-- end of menu -->
@@ -62,7 +62,13 @@
         <div id="templatemo_content_right">
 
 
-            
+            <fieldset>
+			  <legend> Wszystkie pola oprócz numeru telefonu należy wypełnić </legend>
+				<form method="post" action=".">{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" value="Rejestracja">    <input type="reset" value="Wartości początkowe">
+			  </form>
+			</fieldset>
 
             <!-- <a href="subpage.html"><img src="images/templatemo_ads.jpg" alt="ads" /></a>-->
         </div> <!-- end of content right -->
