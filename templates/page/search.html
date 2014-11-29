@@ -1,0 +1,13 @@
+{% extends "base.html"%}
+
+
+{% block content %}
+
+            <fieldset>
+			  <form method="post" action=".">{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" value="Szukaj">    <input type="reset" value="Wartości początkowe">
+			  </form>
+			</fieldset>
+
+{% endblock %}

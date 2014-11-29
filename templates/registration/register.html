@@ -1,66 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Tas_Księgarnia projekt</title>
-<meta name="keywords" content="Book Store Template, Free CSS Template, CSS Website Layout, CSS, HTML" />
-<meta name="description" content="Book Store Template, Free CSS Template, Download CSS Website" />
-{% load static %}
-<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<!--  Free CSS Templates from www.templatemo.com -->
-<div id="templatemo_container">
-	<div id="templatemo_menu">
-    	<ul>
-            <li><a href="/" class="current">Strona Główna</a></li>
-            <li><a href="#">Szukaj</a></li>
-            <li><a href="#">Książki</a></li>
-            <li><a href="#">Kontakt</a></li>
-			<li><a href="/login/">Logowanie</a></li>
-            <li><a href="/register/">Rejestracja</a></li>
-           
-    	</ul>
-    </div> <!-- end of menu -->
-    
-    <div id="templatemo_header">
-    	<div id="templatemo_special_offers">
-        	<p>
-                &nbsp
-        	</p>
-			<a href="subpage.html" style="margin-left: 50px;">Czytaj więcej</a>
-        </div>
-        
-        
-        <div id="templatemo_new_books">
-        	<ul>
-                &nbsp
-            </ul>
-            <a href="subpage.html" style="margin-left: 50px;">Czytaj więcej</a>
-        </div>
-    </div> <!-- end of header -->
-    
-    <div id="templatemo_content">
-    	
-        <div id="templatemo_content_left">
-        	<div class="templatemo_content_left_section">
-            	<h1>Kategorie</h1>
-                <ul>
-                    &nbsp
-            	</ul>
-            </div>
-			<div class="templatemo_content_left_section">
-            	<h1>Bestsellery</h1>
-                <ul>
-                    &nbsp
-            	</ul>
-            </div>
-            
-            
-        </div> <!-- end of content left -->
-        
-        <div id="templatemo_content_right">
+{% extends "base.html"%}
 
+
+{% block content %}
 
             <fieldset>
 			  <legend> Wszystkie pola oprócz numeru telefonu należy wypełnić </legend>
@@ -70,15 +11,4 @@
 			  </form>
 			</fieldset>
 
-            <!-- <a href="subpage.html"><img src="images/templatemo_ads.jpg" alt="ads" /></a>-->
-        </div> <!-- end of content right -->
-    
-    	<div class="cleaner_with_height">&nbsp;</div>
-    </div> <!-- end of content -->
-    
-    <div id="templatemo_footer">
-    
-	        <!-- end of footer -->
-<!--  Free CSS Template www.templatemo.com -->
-</div> <!-- end of container -->
-</html>
+{% endblock %}

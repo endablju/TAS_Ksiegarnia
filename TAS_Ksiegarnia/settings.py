@@ -72,8 +72,6 @@ DATABASES = {
 	    'USER': 'ksiegarnia',
         'PASSWORD': 'tas_projekt',
 		'HOST': 'db4free.net',                      
-
-		
     }
 }
 

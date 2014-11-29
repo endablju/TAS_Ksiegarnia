@@ -2,19 +2,18 @@
 
 
 {% block content %}
-        {% for book in books %}
-			<div class="templatemo_product_box">           
-				<h1>{{book.title}}<span> (by {{book.autor}})</span></h1>
-            	<img src="{{book.slug}}"/>
+
+            <div class="templatemo_product_box">
+            	<h1><span></span></h1>
+            	<!-- <img src="/static/images/#" alt="image" /> -->
                 <div class="product_info">
-                	<p>{{book.text}}</p>
-                    <h3>{{book.price}}</h3>
+                	<p></p>
+                    <h3></h3>
                     <div class="buy_now_button"><a href="#">Kup teraz</a></div>
                     <div class="detail_button"><a href="#">Więcej</a></div>
                 </div>
                 <div class="cleaner">&nbsp;</div>
             </div>
-			
-		{% endfor %}	
-{% endblock %}
 
+            <div class="cleaner_with_height">&nbsp;</div>
+{% endblock %}

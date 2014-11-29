@@ -8,10 +8,14 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	(r'^admin/', include(admin.site.urls)),
 	(r'^register/$','books.views.register_page'),
-    (r'^/?$', 'books.views.index'),
 	(r'^login/$','django.contrib.auth.views.login'),
-    #(r'^logout/$',logout_page),
+	(r'^/?$', 'books.views.index'),
 	(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+	(r'^add_book/$', 'books.views.add_book'),
+	(r'^add_category/$', 'books.views.add_category'),
+	(r'^contact/$', 'books.views.contact'),
+	(r'^search/$', 'books.views.search'),
+	(r'^basket/$', 'books.views.basket'),
 	
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

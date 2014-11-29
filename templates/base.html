@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Tas_Księgarnia projekt</title>
+<title>Tas_Księgarnia projekt: {% block title %}{% endblock %}</title>
 <meta name="keywords" content="Book Store Template, Free CSS Template, CSS Website Layout, CSS, HTML" />
 <meta name="description" content="Book Store Template, Free CSS Template, Download CSS Website" />
 {% load static %}
 <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+{% block external %}{% endblock %}
 </head>
 <body>
 <!--  Free CSS Templates from www.templatemo.com -->
@@ -14,13 +15,23 @@
 	<div id="templatemo_menu">
     	<ul>
             <li><a href="/" class="current">Strona Główna</a></li>
-            <li><a href="#">Szukaj</a></li>
-            <li><a href="#">Książki</a></li>
-            <li><a href="#">Kontakt</a></li>
-			<li><a href="login/">Logowanie</a></li>
-            <li><a href="/register/">Rejestracja</a></li>
-           
-    	</ul>
+            <li><a href="/search/">Szukaj</a></li>
+            <!--<li><a href="/book/">Książki</a></li> -->
+
+			{% if user.is_authenticated %} 		
+				<li><a href="/basket/">Koszyk</a></li>
+				<li><a href="/contact/">Kontakt</a></li>				
+				{% if user.is_superuser%}
+					<li><a href="/add_book/">Dodaj książki</a></li>
+					<li><a href="/add_category/">Dodaj kategorie</a></li>
+				{% endif %}
+			<li>Zalogowany użytkownik: <b>{{user}}</b>    <a href="/logout/">wyloguj się</a> </li>	
+			{% else %}
+			<li><a href="/contact/">Kontakt</a></li>
+            <li><a href="/login/">Logowanie</a></li>
+			<li><a href="/register/">Rejestracja</a></li>
+			{% endif %}
+		</ul>
     </div> <!-- end of menu -->
     
     <div id="templatemo_header">
@@ -28,7 +39,7 @@
         	<p>
                 &nbsp
         	</p>
-			<a href="subpage.html" style="margin-left: 50px;">Czytaj więcej</a>
+			<a href="#" style="margin-left: 50px;">Czytaj więcej</a>
         </div>
         
         
@@ -36,7 +47,7 @@
         	<ul>
                 &nbsp
             </ul>
-            <a href="subpage.html" style="margin-left: 50px;">Czytaj więcej</a>
+            <a href="#" style="margin-left: 50px;">Czytaj więcej</a>
         </div>
     </div> <!-- end of header -->
     
@@ -46,7 +57,9 @@
         	<div class="templatemo_content_left_section">
             	<h1>Kategorie</h1>
                 <ul>
-                    &nbsp
+                    {% for category in categories %}
+					<li><a href="/{{category.name}}/"></a></li>
+					{% endfor%}
             	</ul>
             </div>
 			<div class="templatemo_content_left_section">
@@ -61,9 +74,9 @@
         
         <div id="templatemo_content_right">
 
-			<h2><center>Zostałeś zarejestrowany, twój login to: {{username}}</center>
-			<center><h3>Dziękujemy za rejestrację. Możesz się teraz <a href="/login/">zalogować</a> lub wrócić na <a href="/">stronę głównę</a>.</h3></center>
 
+           {% block content %}{% endblock %}
+			<div class="cleaner_with_height">&nbsp;</div>
             <!-- <a href="subpage.html"><img src="images/templatemo_ads.jpg" alt="ads" /></a>-->
         </div> <!-- end of content right -->
     

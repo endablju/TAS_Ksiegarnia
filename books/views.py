@@ -8,12 +8,13 @@ from django.shortcuts import render_to_response
 from books.models import *
 from books.forms import *
 
-
 def index(request):
-    template = get_template("index.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-    variables=RequestContext(request)
-    output = template.render(variables)
-    return HttpResponse(output)
+	template = get_template("index.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	categories = Category.objects.all()
+	books = Book.objects.all()
+	variables=RequestContext(request,{'categories':categories, 'books':books})
+	output = template.render(variables)
+	return HttpResponse(output)
 	
 def register_page(request):
     if request.method == 'POST':
@@ -48,7 +49,69 @@ def register_page(request):
     output = template.render(variables)
     return HttpResponse(output)
 
+def add_book(request):
+    if request.method == 'POST':
+        form = FormularzDodawaniaKsiazek(request.POST)
+        if form.is_valid():
+			books_book = Book(
+				title = form.cleaned_data['title'],
+				autor = form.cleaned_data['autor'],
+				slug = form.cleaned_data['link'],
+				#book_image = form.cleaned_data['image'],
+				text = form.cleaned_data['description'],
+				#categories = form.cleaned_data['category']
+				price = form.cleaned_data['price'],
+				quantity = form.cleaned_data['quantity'],
+			)
+			books_book.save()
+			template = get_template("page/add_book_succes.html")    
+			variables = RequestContext(request,{'form':form})
+			output = template.render(variables)
+			return HttpResponse(output)   
+    else:
+        form = FormularzDodawaniaKsiazek()    
+    template = get_template("page/add_book.html")
+    variables = RequestContext(request,{'form':form})
+    output = template.render(variables)
+    return HttpResponse(output)
 	
-    #return render_to_response('index.html',
-     #       {'zmienna': 'Jestem widokiem'},
-      #      context_instance=RequestContext(request))
+	
+def add_category(request):
+    if request.method == 'POST':
+        form = FormularzDodawaniaKategorii(request.POST)
+        if form.is_valid():
+			books_category = Book(
+				title = form.cleaned_data['name'],
+				slug = form.cleaned_data['link'],
+				#book_image = form.cleaned_data['image'],
+			)
+			books_category.save()
+			template = get_template("page/add_category_succes.html")    
+			variables = RequestContext(request,{'form':form})
+			output = template.render(variables)
+			return HttpResponse(output)    
+    else:
+        form = FormularzDodawaniaKategorii()    
+    template = get_template("page/add_category.html")
+    variables = RequestContext(request,{'form':form})
+    output = template.render(variables)
+    return HttpResponse(output)	
+	
+def contact(request):
+	template = get_template("page/contact.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	variables=RequestContext(request)
+	output = template.render(variables)
+	return HttpResponse(output)
+	
+def search(request):
+	form = FormularzWyszukiwania(request.POST)
+	template = get_template("page/search.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	variables = RequestContext(request,{'form':form})
+	output = template.render(variables)
+	return HttpResponse(output)
+	
+def basket(request):
+	template = get_template("page/basket.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	variables=RequestContext(request)
+	output = template.render(variables)
+	return HttpResponse(output)	
