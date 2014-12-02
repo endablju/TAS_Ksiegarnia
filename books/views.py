@@ -7,6 +7,11 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from books.models import *
 from books.forms import *
+from books.serializers import *
+from jsonrpc import jsonrpc_method
+from rest_framework import viewsets
+from django.contrib.auth.models import User, Group
+
 
 def index(request):
 	template = get_template("index.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
@@ -115,3 +120,15 @@ def basket(request):
 	variables=RequestContext(request)
 	output = template.render(variables)
 	return HttpResponse(output)	
+	
+
+#REST przykład
+	
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer	

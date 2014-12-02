@@ -5,12 +5,12 @@
         {% for book in books %}
 			<div class="templatemo_product_box">           
 				<h1>{{book.title}}<span> (by {{book.autor}})</span></h1>
-            	<img src="{{book.slug}}"/>
+            	<center><img src="{{book.slug}} "/> </center>
                 <div class="product_info">
                 	<p>{{book.text}}</p>
                     <h3>{{book.price}}</h3>
                     <div class="buy_now_button"><a href="#">Kup teraz</a></div>
-                    <div class="detail_button"><a href="#">Więcej</a></div>
+                    <!--<div class="detail_button"><a href="#">Więcej</a></div> -->
                 </div>
                 <div class="cleaner">&nbsp;</div>
             </div>
