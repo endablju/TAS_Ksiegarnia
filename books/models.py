@@ -23,8 +23,8 @@ class Book(models.Model):
     text = models.TextField(verbose_name='Treść')
     categories = models.ManyToManyField(Category, verbose_name='Kategorie')
     posted_date = models.DateTimeField('Data dodania', auto_now_add=True)
-    price = models.CharField('Cena', max_length=20)
-    quantity = models.CharField('Ilosc', max_length=20)
+    price = models.DecimalField('Cena', max_digits=5, decimal_places=2)
+    quantity = models.IntegerField('Ilosc')
 	
     class Meta:
         verbose_name = "Książka"
@@ -33,9 +33,11 @@ class Book(models.Model):
     def __unicode__(self):
         return self.title
 		
-#class Basket(models.Model):
-#	user = models.CharField('Nazwa uzytkownika', max_length = 500)
-#	title = models.CharField('Tytuł', max_length=255)
-#	autor = models.CharField('Autor', max_length=255)
-#	price = models.CharField('Cena', max_length=20)
-#	quantity = models.CharField('Ilosc', max_length=20)
+class Basket(models.Model):
+	user = models.CharField('Nazwa uzytkownika', max_length = 500)
+	title = models.CharField('Tytuł', max_length=255)
+	autor = models.CharField('Autor', max_length=255)
+	price = models.DecimalField('Cena', max_digits=5,decimal_places=2)
+	quantity = models.IntegerField('Ilosc')
+
+	

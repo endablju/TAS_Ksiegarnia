@@ -9,8 +9,8 @@ from books.models import *
 from books.forms import *
 from books.serializers import *
 from jsonrpc import jsonrpc_method
-from rest_framework import viewsets
 from django.contrib.auth.models import User, Group
+from jsonrpc import jsonrpc_method
 
 
 def index(request):
@@ -20,7 +20,8 @@ def index(request):
 	variables=RequestContext(request,{'categories':categories, 'books':books})
 	output = template.render(variables)
 	return HttpResponse(output)
-	
+
+@jsonrpc_method('books.register')	
 def register_page(request):
     if request.method == 'POST':
         form = FormularzRejestracji(request.POST)
@@ -35,6 +36,7 @@ def register_page(request):
             )
             user.last_name = form.cleaned_data['phone']
             user.save()
+            return u.__dict__
             if form.cleaned_data['log_on']:
                 user = authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password1'])
                 login(request,user)
@@ -53,6 +55,7 @@ def register_page(request):
     variables = RequestContext(request,{'form':form})
     output = template.render(variables)
     return HttpResponse(output)
+	
 
 def add_book(request):
     if request.method == 'POST':
@@ -87,7 +90,7 @@ def add_category(request):
         if form.is_valid():
 			books_category = Book(
 				title = form.cleaned_data['name'],
-				slug = form.cleaned_data['link'],
+				#slug = form.cleaned_data['link'],
 				#book_image = form.cleaned_data['image'],
 			)
 			books_category.save()
@@ -121,14 +124,4 @@ def basket(request):
 	output = template.render(variables)
 	return HttpResponse(output)	
 	
-
-#REST przykład
 	
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer	

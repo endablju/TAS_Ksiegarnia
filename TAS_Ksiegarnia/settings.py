@@ -46,7 +46,6 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'books',
 	'jsonrpc',
-	'rest_framework',
 	)
 
 REST_FRAMEWORK = {

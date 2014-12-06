@@ -42,14 +42,14 @@ class FormularzDodawaniaKsiazek(forms.Form):
 	#image = forms.ImageField(label="Okładka książki:")
 	description = forms.CharField(label="Opis:",widget = forms.Textarea)
 	#category = forms.ChoiceField(label="Kategoria:")
-	price = forms.CharField(label="Cena:")
-	quantity = forms.CharField(label="Ilosc:")
+	price = forms.DecimalField(label="Cena:")
+	quantity = forms.IntegerField(label="Ilosc:")
 	
 	
 	
 class FormularzDodawaniaKategorii(forms.Form):
 		name = forms.CharField(label="Nazwa kategorii:",max_length=300)
-		link = forms.CharField(label="Odnosnik:", max_length=300)
+		#link = forms.CharField(label="Odnosnik:", max_length=300)
 		#image = forms.ImageField(label="Ikona kategori:")
 
 class FormularzWyszukiwania(forms.Form):
