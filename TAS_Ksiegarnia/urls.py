@@ -6,12 +6,12 @@ from django.conf.urls.static import static
 admin.autodiscover()
 from books.views import *
 from jsonrpc import jsonrpc_site
-import books.views
+from rest_framework import routers
 
 
-#router = routers.DefaultRouter()
-#router.register(r'users', UserViewSet)
-#router.register(r'groups', GroupViewSet)
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'book', BookViewSet)
 
 
 urlpatterns = patterns('',
@@ -21,11 +21,13 @@ urlpatterns = patterns('',
 	#(r'^json/$', jsonrpc_site.dispatch, name='jsonrpc_mountpoint'),
 	(r'^/?$', index),
 	(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-	(r'^add_book/$', add_book),
+	(r'^add_book/$', add_book_rpc),
 	(r'^add_category/$', add_category),
 	(r'^contact/$', contact),
 	(r'^search/$', search),
 	(r'^basket/$', basket),
+	(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+	(r'^rest/', include(router.urls)),
 	
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

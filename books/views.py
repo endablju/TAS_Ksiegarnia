@@ -5,23 +5,27 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.contrib.auth.models import User
+from rest_framework import viewsets
 from books.models import *
 from books.forms import *
 from books.serializers import *
 from jsonrpc import jsonrpc_method
-from django.contrib.auth.models import User, Group
-from jsonrpc import jsonrpc_method
+import xmlrpclib
 
+# Create an object to represent our server.
+server_url = 'http://127.0.0.1:8001';
+server = xmlrpclib.Server(server_url);
 
 def index(request):
-	template = get_template("index.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	template = get_template("index.html") 
 	categories = Category.objects.all()
 	books = Book.objects.all()
 	variables=RequestContext(request,{'categories':categories, 'books':books})
 	output = template.render(variables)
 	return HttpResponse(output)
 
-@jsonrpc_method('books.register')	
+	
 def register_page(request):
     if request.method == 'POST':
         form = FormularzRejestracji(request.POST)
@@ -36,7 +40,6 @@ def register_page(request):
             )
             user.last_name = form.cleaned_data['phone']
             user.save()
-            return u.__dict__
             if form.cleaned_data['log_on']:
                 user = authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password1'])
                 login(request,user)
@@ -56,7 +59,30 @@ def register_page(request):
     output = template.render(variables)
     return HttpResponse(output)
 	
-
+def add_book_rpc(request):
+	if request.method == 'POST':
+		form = FormularzDodawaniaKsiazek(request.POST)
+		if form.is_valid():
+			title = request.POST['title']
+			autor = request.POST['autor']
+			slug = request.POST['link']
+			text = request.POST['description']
+			price = request.POST['price']
+			quantity = request.POST['quantity']
+			server.add_book(title,autor,slug,text,price,quantity)
+			
+			template = get_template("page/add_book_succes.html")    
+			variables = RequestContext(request,{'form':form})
+			output = template.render(variables)
+			return HttpResponse(output)  
+	else:
+		form = FormularzDodawaniaKsiazek()    
+	template = get_template("page/add_book.html")
+	variables = RequestContext(request,{'form':form})
+	output = template.render(variables)
+	return HttpResponse(output)
+	
+	
 def add_book(request):
     if request.method == 'POST':
         form = FormularzDodawaniaKsiazek(request.POST)
@@ -72,10 +98,11 @@ def add_book(request):
 				quantity = form.cleaned_data['quantity'],
 			)
 			books_book.save()
+			
 			template = get_template("page/add_book_succes.html")    
 			variables = RequestContext(request,{'form':form})
 			output = template.render(variables)
-			return HttpResponse(output)   
+			return HttpResponse(output)  
     else:
         form = FormularzDodawaniaKsiazek()    
     template = get_template("page/add_book.html")
@@ -124,4 +151,17 @@ def basket(request):
 	output = template.render(variables)
 	return HttpResponse(output)	
 	
-	
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer	
