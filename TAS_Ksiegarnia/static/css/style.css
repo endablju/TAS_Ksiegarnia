@@ -63,7 +63,7 @@ img {
 
 .detail_button a{
 	clear: both;
-	text-align: center;
+	text-align: right;
 	display: block;
 	width: 100px;
 	padding: 4px 0 5px 0;
@@ -234,7 +234,7 @@ img {
 #templatemo_content_right .templatemo_product_box {
 	float: left;
 	width: 303px;
-	height: 600px;
+	height: 650px;
 	padding: 10px;
 	border: 1px solid #333;
 }
