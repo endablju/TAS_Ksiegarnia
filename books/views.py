@@ -58,6 +58,23 @@ def register_page(request):
     variables = RequestContext(request,{'form':form})
     output = template.render(variables)
     return HttpResponse(output)
+
+def add_category_rpc(request):
+    if request.method == 'POST':
+        form = FormularzDodawaniaKategorii(request.POST)
+        if form.is_valid():
+			name = request.POST['name']
+			server.add_category(name)
+			template = get_template("page/add_category_succes.html")    
+			variables = RequestContext(request,{'form':form})
+			output = template.render(variables)
+			return HttpResponse(output)    
+    else:
+        form = FormularzDodawaniaKategorii()    
+    template = get_template("page/add_category.html")
+    variables = RequestContext(request,{'form':form})
+    output = template.render(variables)
+    return HttpResponse(output)	
 	
 def add_book_rpc(request):
 	if request.method == 'POST':
@@ -81,6 +98,113 @@ def add_book_rpc(request):
 	variables = RequestContext(request,{'form':form})
 	output = template.render(variables)
 	return HttpResponse(output)
+	
+def delete_book_page_rpc(request):
+    if request.method == 'POST':
+		id = request.POST['id']
+		server.delete_book(id)
+		template = get_template("admin.html")
+		books = Book.objects.all()
+		variables = RequestContext(request,{'books':books})                
+		output = template.render(variables)            
+		return HttpResponse(output)                     
+    else:
+		ap_book= int(request.GET['id'])
+		book = Book.objects.get(id=ap_book)
+		template = get_template("edition/books_delete.html")
+		variables = RequestContext(request,{'book':book}) 
+		output = template.render(variables)
+		return HttpResponse(output)	
+
+
+def edit_book_page(request):
+	if request.method == 'POST':
+		form = FormularzEdycjiKsiazki(request.POST)
+		if form.is_valid():
+			id = request.POST['id']
+			if len(id) == 0:
+				book = Book() 
+			else:
+				book = Book.objects.get(id=int(id)) 
+			book.title = form.cleaned_data['title']
+			book.autor = form.cleaned_data['autor']
+			book.slug = form.cleaned_data['link']
+			#book.book_image = form.cleaned_data['image']
+			book.text = form.cleaned_data['description']
+			#book.categories = form.cleaned_data['category']
+			book.price = form.cleaned_data['price']
+			book.quantity = form.cleaned_data['quantity']
+			book.save()
+			template = get_template("admin.html")
+			books = Book.objects.all()
+			variables = RequestContext(request,{'books':books})                
+			output = template.render(variables)            
+			return HttpResponse(output)                     
+	elif request.GET.has_key('id'):
+		ap_type = int(request.GET['id'])
+		book = Book.objects.get(id=ap_type)
+		form = FormularzEdycjiKsiazki({'title':book.title,'autor':book.autor,'link':book.slug,'description':book.text,'price':book.price,'quantity':book.quantity})
+		template = get_template("edition/books_edition.html")
+		variables = RequestContext(request,{'form':form,'book':book})
+		output = template.render(variables)
+		return HttpResponse(output)        
+	else:
+		form = FormularzEdycjiKsiazki()
+	template = get_template("edition/book_edition.html")
+	variables = RequestContext(request,{'form':form})
+	output = template.render(variables)
+	return HttpResponse(output)
+
+	
+	
+def contact(request):
+	template = get_template("page/contact.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	variables=RequestContext(request)
+	output = template.render(variables)
+	return HttpResponse(output)
+	
+def search(request):
+	form = FormularzWyszukiwania(request.POST)
+	template = get_template("page/search.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	variables = RequestContext(request,{'form':form})
+	output = template.render(variables)
+	return HttpResponse(output)
+	
+def basket(request):
+	template = get_template("page/basket.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
+	variables=RequestContext(request)
+	output = template.render(variables)
+	return HttpResponse(output)	
+
+ 
+def admin_page(request):
+    template = get_template("admin.html")
+    books = Book.objects.all()
+    variables = RequestContext(request,{'books':books})                
+    output = template.render(variables)            
+    return HttpResponse(output)
+
+
+
+
+	
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows books to be viewed or edited.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer	
+
+
+
 	
 	
 def add_book(request):
@@ -109,13 +233,12 @@ def add_book(request):
     variables = RequestContext(request,{'form':form})
     output = template.render(variables)
     return HttpResponse(output)
-	
-	
+
 def add_category(request):
     if request.method == 'POST':
         form = FormularzDodawaniaKategorii(request.POST)
         if form.is_valid():
-			books_category = Book(
+			books_category = Category(
 				title = form.cleaned_data['name'],
 				#slug = form.cleaned_data['link'],
 				#book_image = form.cleaned_data['image'],
@@ -132,36 +255,21 @@ def add_category(request):
     output = template.render(variables)
     return HttpResponse(output)	
 	
-def contact(request):
-	template = get_template("page/contact.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-	variables=RequestContext(request)
-	output = template.render(variables)
-	return HttpResponse(output)
-	
-def search(request):
-	form = FormularzWyszukiwania(request.POST)
-	template = get_template("page/search.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-	variables = RequestContext(request,{'form':form})
-	output = template.render(variables)
-	return HttpResponse(output)
-	
-def basket(request):
-	template = get_template("page/basket.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-	variables=RequestContext(request)
-	output = template.render(variables)
-	return HttpResponse(output)	
-	
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
-
-class BookViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows books to be viewed or edited.
-    """
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer	
+def delete_book_page(request):
+    if request.method == 'POST':
+		id = request.POST['id']
+		book = Book.objects.get(id=id)
+		book.delete()
+		template = get_template("admin.html")
+		books = Book.objects.all()
+		variables = RequestContext(request,{'books':books})                
+		output = template.render(variables)            
+		return HttpResponse(output)                     
+    else:
+		ap_book= int(request.GET['id'])
+		book = Book.objects.get(id=ap_book)
+		template = get_template("edition/books_delete.html")
+		variables = RequestContext(request,{'book':book}) 
+		output = template.render(variables)
+		return HttpResponse(output)		

@@ -1,0 +1,19 @@
+{% extends "base.html"%}
+{% block title %} - strona administratora{% endblock %}
+
+{% block content%}
+<h2>Lista książek</h2>
+<ul>
+  <hr width="50%" align="left">
+  {% for book in books %}
+  <li style="list-style-type:none;width:50%;">{{book.title}}<div id="nav">
+      <a href="/save_apartment/?id={{apartment.id}}">Edycja</a></div>
+      <br>Tytuł: {{book.title}}
+      <br>Autor: {{book.autor}}
+      <br>Cena: {{book.price}}
+  </li>
+  {% endfor %}
+  <li style="list-style-type:none;"><a href="/save_apartment/">Dopisanie</a></li>
+</ul>
+
+{% endblock %}

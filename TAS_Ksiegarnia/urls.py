@@ -22,12 +22,15 @@ urlpatterns = patterns('',
 	(r'^/?$', index),
 	(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
 	(r'^add_book/$', add_book_rpc),
-	(r'^add_category/$', add_category),
+	(r'^add_category/$', add_category_rpc),
 	(r'^contact/$', contact),
 	(r'^search/$', search),
 	(r'^basket/$', basket),
 	(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 	(r'^rest/', include(router.urls)),
+	(r'^admin_page/$',admin_page),
+	(r'^save_book/$',edit_book_page),
+	(r'^delete_book/$',delete_book_page_rpc),
 	
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

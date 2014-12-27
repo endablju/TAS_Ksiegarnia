@@ -44,8 +44,17 @@ class FormularzDodawaniaKsiazek(forms.Form):
 	#category = forms.ChoiceField(label="Kategoria:")
 	price = forms.DecimalField(label="Cena:")
 	quantity = forms.IntegerField(label="Ilosc:")
-	
-	
+
+class FormularzEdycjiKsiazki(forms.Form):
+	title = forms.CharField(label="Tytuł",max_length=300)
+	autor = forms.CharField(label="Autor:")
+	link = forms.CharField(label="Odnosnik:",max_length=100)
+	#image = forms.ImageField(label="Okładka książki:")
+	description = forms.CharField(label="Opis:",widget = forms.Textarea)
+	#category = forms.ChoiceField(label="Kategoria:")
+	price = forms.DecimalField(label="Cena:")
+	quantity = forms.IntegerField(label="Ilosc:")	
+
 	
 class FormularzDodawaniaKategorii(forms.Form):
 		name = forms.CharField(label="Nazwa kategorii:",max_length=300)

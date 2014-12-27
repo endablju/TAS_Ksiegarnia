@@ -1,0 +1,17 @@
+{% extends "base.html"%}
+{% block title %} - edycja opisu książki{% endblock %}
+{% block content%}
+<center>
+<h2>Edycja opisu ksiązki</h2>
+<p>
+<div style="margin-left:0%;margin-right:35%;">
+<fieldset>
+  <form method="post" action=".">{% csrf_token %}
+    <div style="text-align:left";>{{ form.as_ul }}</div>
+    <input type="hidden" name="id" value="{{ book.id }}"/>
+    <input type="submit" value="Zapisanie"/>    <input type="reset" value="Wartości dotychczasowe"/>
+  </form>
+</fieldset>
+</div>
+</center>  
+{% endblock %}

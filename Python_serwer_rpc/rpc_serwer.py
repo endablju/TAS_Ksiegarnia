@@ -27,8 +27,37 @@ def add_book(title,autor,slug,text,price,quantity):
         cursor.close()
         db.close()
         
+def delete_book(id):
+    sql = "DELETE FROM books_book WHERE id=%s"
+    try:
+        db = MySQLdb.connect("db4free.net", "ksiegarnia", "tas_projekt", "tasksiegarnia")
+        cursor = db.cursor()
+        cursor.execute(sql,(id,))
+        db.commit()
+        print "1"
+    except:
+        print "0"
+    finally:
+        cursor.close()
+        db.close()
 
+def add_category(name):
+    sql = "INSERT INTO books_category (name) VALUES (%s)"
+    try:
+        db = MySQLdb.connect("db4free.net", "ksiegarnia", "tas_projekt", "tasksiegarnia")
+        cursor = db.cursor()
+        cursor.execute(sql,(name,))
+        db.commit()
+        print "1"
+    except:
+        print "0"
+        db.rollback()
+    finally:
+        cursor.close()
+        db.close()
 
 
 server.register_function(add_book)
+server.register_function(delete_book)
+server.register_function(add_category)
 server.serve_forever()

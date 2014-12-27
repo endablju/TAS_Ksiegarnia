@@ -24,6 +24,8 @@
 				{% if user.is_superuser%}
 					<li><a href="/add_book/">Dodaj książki</a></li>
 					<li><a href="/add_category/">Dodaj kategorie</a></li>
+					<li><a href="/admin_page/">Admin</a></li>
+					
 				{% endif %}
 			<li>Zalogowany użytkownik: <b>{{user}}</b>    <a href="/logout/">wyloguj się</a> </li>	
 			{% else %}
@@ -62,14 +64,7 @@
 					{% endfor%}
             	</ul>
             </div>
-			<div class="templatemo_content_left_section">
-            	<h1>Bestsellery</h1>
-                <ul>
-                    &nbsp
-            	</ul>
-            </div>
-            
-            
+     
         </div> <!-- end of content left -->
         
         <div id="templatemo_content_right">

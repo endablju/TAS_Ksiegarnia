@@ -19,7 +19,7 @@ class Category(models.Model):
 class Book(models.Model):
     title = models.CharField('Tytuł', max_length=255)
     autor = models.CharField('Autor', max_length=255)
-    slug = models.SlugField('Odnośnik', max_length=255, unique=True)
+    slug = models.SlugField('Odnośnik', max_length=255)
     text = models.TextField(verbose_name='Treść')
     categories = models.ManyToManyField(Category, verbose_name='Kategorie')
     posted_date = models.DateTimeField('Data dodania', auto_now_add=True)
