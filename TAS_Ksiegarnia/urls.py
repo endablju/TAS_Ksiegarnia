@@ -29,7 +29,7 @@ urlpatterns = patterns('',
 	(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 	(r'^rest/', include(router.urls)),
 	(r'^admin_page/$',admin_page),
-	(r'^save_book/$',edit_book_page),
+	(r'^save_book/$',edit_book_page_rpc),
 	(r'^delete_book/$',delete_book_page_rpc),
 	
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

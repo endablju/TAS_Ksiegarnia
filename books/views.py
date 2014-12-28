@@ -116,25 +116,21 @@ def delete_book_page_rpc(request):
 		output = template.render(variables)
 		return HttpResponse(output)	
 
-
-def edit_book_page(request):
+def edit_book_page_rpc(request):
 	if request.method == 'POST':
 		form = FormularzEdycjiKsiazki(request.POST)
 		if form.is_valid():
 			id = request.POST['id']
+			title = request.POST['title']
+			autor = request.POST['autor']
+			slug = request.POST['link']
+			text = request.POST['description']
+			price = request.POST['price']
+			quantity = request.POST['quantity']
 			if len(id) == 0:
-				book = Book() 
+				server.add_book(title,autor,slug,text,price,quantity)
 			else:
-				book = Book.objects.get(id=int(id)) 
-			book.title = form.cleaned_data['title']
-			book.autor = form.cleaned_data['autor']
-			book.slug = form.cleaned_data['link']
-			#book.book_image = form.cleaned_data['image']
-			book.text = form.cleaned_data['description']
-			#book.categories = form.cleaned_data['category']
-			book.price = form.cleaned_data['price']
-			book.quantity = form.cleaned_data['quantity']
-			book.save()
+				server.update_book(title,autor,slug,text,price,quantity,id)
 			template = get_template("admin.html")
 			books = Book.objects.all()
 			variables = RequestContext(request,{'books':books})                
@@ -154,6 +150,7 @@ def edit_book_page(request):
 	variables = RequestContext(request,{'form':form})
 	output = template.render(variables)
 	return HttpResponse(output)
+
 
 	
 	
@@ -273,3 +270,42 @@ def delete_book_page(request):
 		variables = RequestContext(request,{'book':book}) 
 		output = template.render(variables)
 		return HttpResponse(output)		
+		
+def edit_book_page(request):
+	if request.method == 'POST':
+		form = FormularzEdycjiKsiazki(request.POST)
+		if form.is_valid():
+			id = request.POST['id']
+			if len(id) == 0:
+				book = Book() 
+			else:
+				book = Book.objects.get(id=int(id)) 
+			book.title = form.cleaned_data['title']
+			book.autor = form.cleaned_data['autor']
+			book.slug = form.cleaned_data['link']
+			#book.book_image = form.cleaned_data['image']
+			book.text = form.cleaned_data['description']
+			#book.categories = form.cleaned_data['category']
+			book.price = form.cleaned_data['price']
+			book.quantity = form.cleaned_data['quantity']
+			book.save()
+			template = get_template("admin.html")
+			books = Book.objects.all()
+			variables = RequestContext(request,{'books':books})                
+			output = template.render(variables)            
+			return HttpResponse(output)                     
+	elif request.GET.has_key('id'):
+		ap_type = int(request.GET['id'])
+		book = Book.objects.get(id=ap_type)
+		form = FormularzEdycjiKsiazki({'title':book.title,'autor':book.autor,'link':book.slug,'description':book.text,'price':book.price,'quantity':book.quantity})
+		template = get_template("edition/books_edition.html")
+		variables = RequestContext(request,{'form':form,'book':book})
+		output = template.render(variables)
+		return HttpResponse(output)        
+	else:
+		form = FormularzEdycjiKsiazki()
+	template = get_template("edition/book_edition.html")
+	variables = RequestContext(request,{'form':form})
+	output = template.render(variables)
+	return HttpResponse(output)
+		

@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 import MySQLdb
@@ -56,8 +57,27 @@ def add_category(name):
         cursor.close()
         db.close()
 
+		
+def update_book(title,autor,slug,text,price,quantity,id):
+    sql = "UPDATE books_book SET title=%s, autor=%s, slug=%s, text=%s, price=%s, quantity=%s WHERE id=%s"
+    
+    try:
+        db = MySQLdb.connect("db4free.net", "ksiegarnia", "tas_projekt", "tasksiegarnia")
+        cursor = db.cursor()
+        cursor.execute(sql,(title,autor,slug,text,price,quantity,id,))
+        print "1"
+        db.commit()
+        
+    except:
+        print "0"
+        db.rollback()
+    finally:
+        cursor.close()
+        db.close()		
+		
 
 server.register_function(add_book)
 server.register_function(delete_book)
 server.register_function(add_category)
+server.register_function(update_book)
 server.serve_forever()
