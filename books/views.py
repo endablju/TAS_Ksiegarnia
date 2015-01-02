@@ -19,8 +19,8 @@ server = xmlrpclib.Server(server_url);
 
 def index(request):
 	template = get_template("index.html") 
-	categories = Category.objects.all()
-	books = Book.objects.all()
+	books = Book.objects.all() #TUTAJ!!
+	categories = Category.objects.all() #TUTAJ!!
 	variables=RequestContext(request,{'categories':categories, 'books':books})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -54,8 +54,9 @@ def register_page(request):
                 return HttpResponse(output)            
     else:
         form = FormularzRejestracji()
-    template = get_template("registration/register.html")    
-    variables = RequestContext(request,{'form':form})
+    template = get_template("registration/register.html") 
+    categories = Category.objects.all()  #TUTAJ!!
+    variables = RequestContext(request,{'categories':categories,'form':form})
     output = template.render(variables)
     return HttpResponse(output)
 
@@ -72,7 +73,8 @@ def add_category_rpc(request):
     else:
         form = FormularzDodawaniaKategorii()    
     template = get_template("page/add_category.html")
-    variables = RequestContext(request,{'form':form})
+    categories = Category.objects.all()  #TUTAJ!!
+    variables = RequestContext(request,{'categories':categories,'form':form})
     output = template.render(variables)
     return HttpResponse(output)	
 	
@@ -95,7 +97,8 @@ def add_book_rpc(request):
 	else:
 		form = FormularzDodawaniaKsiazek()    
 	template = get_template("page/add_book.html")
-	variables = RequestContext(request,{'form':form})
+	categories = Category.objects.all()  #TUTAJ!!
+	variables = RequestContext(request,{'categories':categories,'form':form})
 	output = template.render(variables)
 	return HttpResponse(output)
 	
@@ -104,18 +107,22 @@ def delete_book_page_rpc(request):
 		id = request.POST['id']
 		server.delete_book(id)
 		template = get_template("admin.html")
-		books = Book.objects.all()
-		variables = RequestContext(request,{'books':books})                
+		books = Book.objects.all()  #TUTAJ!!
+		categories = Category.objects.all()  #TUTAJ!!
+		variables = RequestContext(request,{'categories':categories,'books':books})                
 		output = template.render(variables)            
 		return HttpResponse(output)                     
     else:
 		ap_book= int(request.GET['id'])
-		book = Book.objects.get(id=ap_book)
+		book = Book.objects.get(id=ap_book)  #TUTAJ!!
 		template = get_template("edition/books_delete.html")
-		variables = RequestContext(request,{'book':book}) 
+		categories = Category.objects.all()  #TUTAJ!!
+		variables = RequestContext(request,{'categories':categories,'book':book}) 
 		output = template.render(variables)
 		return HttpResponse(output)	
 
+#http://django-rpc.readthedocs.org/en/0.3/tutorial/part4.html		
+		
 def edit_book_page_rpc(request):
 	if request.method == 'POST':
 		form = FormularzEdycjiKsiazki(request.POST)
@@ -132,52 +139,65 @@ def edit_book_page_rpc(request):
 			else:
 				server.update_book(title,autor,slug,text,price,quantity,id)
 			template = get_template("admin.html")
-			books = Book.objects.all()
-			variables = RequestContext(request,{'books':books})                
+			books = Book.objects.all()  #TUTAJ!!
+			categories = Category.objects.all() #TUTAJ!!
+			variables = RequestContext(request,{'categories':categories,'books':books})                
 			output = template.render(variables)            
 			return HttpResponse(output)                     
 	elif request.GET.has_key('id'):
 		ap_type = int(request.GET['id'])
-		book = Book.objects.get(id=ap_type)
+		book = Book.objects.get(id=ap_type) #TUTAJ!!
 		form = FormularzEdycjiKsiazki({'title':book.title,'autor':book.autor,'link':book.slug,'description':book.text,'price':book.price,'quantity':book.quantity})
 		template = get_template("edition/books_edition.html")
-		variables = RequestContext(request,{'form':form,'book':book})
+		categories = Category.objects.all() #TUTAJ!!
+		variables = RequestContext(request,{'categories':categories,'form':form,'book':book})
 		output = template.render(variables)
 		return HttpResponse(output)        
 	else:
 		form = FormularzEdycjiKsiazki()
 	template = get_template("edition/book_edition.html")
-	variables = RequestContext(request,{'form':form})
+	categories = Category.objects.all()  #TUTAJ!!
+	variables = RequestContext(request,{'categories':categories,'form':form})
 	output = template.render(variables)
 	return HttpResponse(output)
 
-
+def category(request):
+    template = get_template("page/category.html")
+    books = Book.objects.all()  #TUTAJ!!
+    categories = Category.objects.all()  #TUTAJ!!
+    variables = RequestContext(request,{'categories':categories})#,'books':books})                
+    output = template.render(variables)            
+    return HttpResponse(output)
 	
 	
 def contact(request):
 	template = get_template("page/contact.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-	variables=RequestContext(request)
+	categories = Category.objects.all()  #TUTAJ!! 
+	variables=RequestContext(request,{'categories':categories})
 	output = template.render(variables)
 	return HttpResponse(output)
 	
 def search(request):
 	form = FormularzWyszukiwania(request.POST)
 	template = get_template("page/search.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-	variables = RequestContext(request,{'form':form})
+	categories = Category.objects.all()  #TUTAJ!!
+	variables = RequestContext(request,{'categories':categories,'form':form})
 	output = template.render(variables)
 	return HttpResponse(output)
 	
 def basket(request):
 	template = get_template("page/basket.html") #zbieżność nazw wzorca i funkcji nie ma żadnego znaczenia
-	variables=RequestContext(request)
+	categories = Category.objects.all()  #TUTAJ!!
+	variables=RequestContext(request,{'categories':categories})
 	output = template.render(variables)
 	return HttpResponse(output)	
 
  
 def admin_page(request):
     template = get_template("admin.html")
-    books = Book.objects.all()
-    variables = RequestContext(request,{'books':books})                
+    books = Book.objects.all()  #TUTAJ!!
+    categories = Category.objects.all()  #TUTAJ!!
+    variables = RequestContext(request,{'categories':categories,'books':books})                
     output = template.render(variables)            
     return HttpResponse(output)
 

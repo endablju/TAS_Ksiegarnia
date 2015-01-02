@@ -31,6 +31,7 @@ urlpatterns = patterns('',
 	(r'^admin_page/$',admin_page),
 	(r'^save_book/$',edit_book_page_rpc),
 	(r'^delete_book/$',delete_book_page_rpc),
+	(r'^category/$',category),
 	
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

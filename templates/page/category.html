@@ -1,0 +1,25 @@
+{% extends "base.html"%}
+{% block title %} - strona administratora{% endblock %}
+
+{% block content%}
+<h2>Lista książek</h2>
+<ul>
+  <hr width="50%" align="left">
+  {% for book in books %}
+  <div class="templatemo_product_box">           
+		<h1>{{book.title}}<span> (by {{book.autor}})</span></h1>
+		<center><img src="{{book.slug}} "/> </center>
+		<div class="product_info">
+			<p>{{book.text}}</p>
+			<h3>{{book.price}}zł</h3>
+			<div>
+				<div class="buy_now_button"><a href="#">Dodaj do koszyka</a></div>
+				<a href="#" class="detail_button">Więcej</a>
+			</div>	
+		</div>
+		<div class="cleaner">&nbsp;</div>
+  </div>
+  {% endfor %}
+</ul>
+
+{% endblock %}

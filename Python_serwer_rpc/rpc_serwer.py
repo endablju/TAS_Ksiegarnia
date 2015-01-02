@@ -11,6 +11,9 @@ server = SimpleXMLRPCServer(("localhost", 8001),
                             allow_none=True)
 server.register_introspection_functions()
 
+
+#trzeba napisać 4 metody pobieranie Book_object_all, book_object_get, category_object_all, category_object_get
+
     
 def add_book(title,autor,slug,text,price,quantity):
     sql = "INSERT INTO books_book (title,slug,text,autor,price,quantity)" \
