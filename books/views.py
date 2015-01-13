@@ -342,8 +342,8 @@ def edit_book_page(request):
 		
 
 def add_opinion(request, pk):
-    if request.method == 'GET':
-        form = FormularzDodawaniaOpinii(request.GET)
+    if request.method == 'POST':
+        form = FormularzDodawaniaOpinii(request.POST)
         book = Book.objects.get(id=pk)
         if form.is_valid():
 			books_book_opinion = Opinion(
