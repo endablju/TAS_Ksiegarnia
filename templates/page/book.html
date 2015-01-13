@@ -3,7 +3,7 @@
 
 {% block content %}
 
-            <div class="templatemo_product_box">
+            <div class="templatemo_product_box2">
             	<h1>{{book.title}}<span> (by {{book.autor}})</span></h1>
             	<center><img src="{{book.slug}} "/> </center>
                 <div class="product_info">
@@ -17,7 +17,7 @@
             </div>
             <div class="new_opinion_button"><a href="/add_opinion/{{book.id}}">Dodaj opinię</a></div>
             {% for opinion in opinions %}
-                    <p>{{opinion.opinion}}</p></br>
+                    </br><div class="opinion">{{opinion.opinion}}</div>
             {% endfor %}
 
             <div class="cleaner_with_height">&nbsp;</div>

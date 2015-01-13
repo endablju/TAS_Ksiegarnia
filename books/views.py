@@ -205,7 +205,8 @@ def book(request,pk):
     template = get_template("page/book.html")
     book = Book.objects.get(id=pk)  #TUTAJ!!
     opinions = Opinion.objects.filter(book_id=pk)  #TUTAJ!!
-    variables = RequestContext(request,{'opinions':opinions,'book':book})                
+    categories = Category.objects.all()  #TUTAJ!!
+    variables = RequestContext(request,{'categories':categories,'opinions':opinions,'book':book})                
     output = template.render(variables)            
     return HttpResponse(output)
 
