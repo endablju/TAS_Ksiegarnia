@@ -298,6 +298,21 @@ img {
 	width: 300px;
 }
 
+.templatemo_product_box2 h1 span {
+	font-weight: normal;
+}
+
+.templatemo_product_box2 img {
+	height: 150px;
+	width: 100px;
+	margin-right: 20px;
+}
+
+.opinion {
+	padding: 10px;
+	border: 1px solid #333;
+}
+
 .product_info p {
 	margin-bottom: 15px;
 }
