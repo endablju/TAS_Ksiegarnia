@@ -7,19 +7,19 @@
   <hr width="50%" align="left">
   {% for book in books %}
   <li style="list-style-type:none;width:50%;">{{book.title}}
-	  id: {{book.id}}
-      Tytuł: {{book.title}}
-      Autor: {{book.autor}}
-      Cena: {{book.price}}
+	  <br>id: {{book.id}}
+      <br>Tytuł: {{book.title}}
+      <br>Autor: {{book.autor}}
+      <br>Cena: {{book.price}}
 	  <br>
 	  <div>
-		<a href="/save_book/?id={{book.id}}">Edycja</a> 
+		<a href="/save_book/?id={{book.id}}">Edycja</a> <br> 
 		<a href="/delete_book/?id={{book.id}}">Usuń</a>
 	  </div>
 	  <br>
   </li>
   {% endfor %}
-  
+  <li style="list-style-type:none;"><a href="/save_book/">Dopisanie</a></li>
 </ul>
 
 {% endblock %}
