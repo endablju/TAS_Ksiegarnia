@@ -40,4 +40,8 @@ class Basket(models.Model):
 	price = models.DecimalField('Cena', max_digits=5,decimal_places=2)
 	quantity = models.IntegerField('Ilosc')
 
+class Opinion(models.Model):
+    book_id = models.IntegerField('Id książki')
+    opinion = models.CharField('Twoja opinia', max_length=255)
+
 	
