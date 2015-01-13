@@ -13,3 +13,8 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
         fields = ('url', 'id', 'title', 'slug', 'text', 'posted_date','autor', 'price', 'quantity')
+
+class OpinionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Opinion
+        fields = ('url', 'id', 'book_id', 'opinion')

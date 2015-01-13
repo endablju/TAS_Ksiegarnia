@@ -201,7 +201,13 @@ def admin_page(request):
     output = template.render(variables)            
     return HttpResponse(output)
 
-
+def book(request,pk):
+    template = get_template("page/book.html")
+    book = Book.objects.get(id=pk)  #TUTAJ!!
+    opinions = Opinion.objects.filter(book_id=pk)  #TUTAJ!!
+    variables = RequestContext(request,{'opinions':opinions,'book':book})                
+    output = template.render(variables)            
+    return HttpResponse(output)
 
 
 	
@@ -220,7 +226,12 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer	
 
-
+class OpinionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows opinions to be viewed or edited.
+    """
+    queryset = Opinion.objects.all()
+    serializer_class = OpinionSerializer	    
 
 	
 	
@@ -329,3 +340,24 @@ def edit_book_page(request):
 	output = template.render(variables)
 	return HttpResponse(output)
 		
+
+def add_opinion(request, pk):
+    if request.method == 'GET':
+        form = FormularzDodawaniaOpinii(request.GET)
+        book = Book.objects.get(id=pk)
+        if form.is_valid():
+			books_book_opinion = Opinion(
+				opinion = form.cleaned_data['opinion'],
+				book_id=pk
+			)
+			books_book_opinion.save()
+			template = get_template("page/add_opinion_succes.html")    
+			variables = RequestContext(request,{'form':form,'book':book})
+			output = template.render(variables)
+			return HttpResponse(output)    
+    else:
+        form = FormularzDodawaniaOpinii()    
+    template = get_template("page/add_opinion.html")
+    variables = RequestContext(request,{'form':form})
+    output = template.render(variables)
+    return HttpResponse(output)	
