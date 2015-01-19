@@ -88,9 +88,11 @@ def add_book_rpc(request):
 			text = request.POST['description']
 			price = request.POST['price']
 			quantity = request.POST['quantity']
-			server.add_book(title,autor,slug,text,price,quantity)
-			
-			template = get_template("page/add_book_succes.html")    
+			zmienna = server.add_book(title,autor,slug,text,price,quantity)
+			if (zmienna == "TRUE"):
+				template = get_template("page/add_book_succes.html")
+			else:
+				template = get_template("page/add_book_fail.html")  
 			variables = RequestContext(request,{'form':form})
 			output = template.render(variables)
 			return HttpResponse(output)  

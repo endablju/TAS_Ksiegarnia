@@ -14,6 +14,8 @@ server.register_introspection_functions()
 
 #trzeba napisać 4 metody pobieranie Book_object_all, book_object_get, category_object_all, category_object_get
 
+
+#sqlalchemy
     
 def add_book(title,autor,slug,text,price,quantity):
     sql = "INSERT INTO books_book (title,slug,text,autor,price,quantity)" \
@@ -24,12 +26,15 @@ def add_book(title,autor,slug,text,price,quantity):
         cursor.execute(sql,(title,slug,text,autor,price,quantity))
         db.commit()
         print "1"
+        return "TRUE"  
     except:
         print "0"
+        return "FALSE"        
         db.rollback()
     finally:
         cursor.close()
         db.close()
+    
         
 def delete_book(id):
     sql = "DELETE FROM books_book WHERE id=%s"
