@@ -2,12 +2,15 @@
 
 
 {% block content %}
-
+		{% if user.is_authenticated %} 
             <fieldset>
 			  <form method="post" action=".">{% csrf_token %}
 				{{ form.as_p }}
 				<input type="submit" value="Dodaj">    <input type="reset" value="Wartości początkowe">
 			  </form>
 			</fieldset>
+		{% else %}
+			<div>Aby dodawać opinie, musisz być zalogowany.</div>
+		{% endif %}
 
 {% endblock %}

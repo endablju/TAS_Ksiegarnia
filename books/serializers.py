@@ -17,4 +17,4 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
 class OpinionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Opinion
-        fields = ('url', 'id', 'book_id', 'opinion')
+        fields = ('url', 'id', 'book_id', 'opinion', 'user_name')

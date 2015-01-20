@@ -66,6 +66,7 @@ class FormularzWyszukiwania(forms.Form):
 
 class FormularzDodawaniaOpinii(forms.Form):
 		opinion = forms.CharField(label="Twoja opinia:",max_length=255)
+		user_name = forms.CharField(label="Autor:",max_length=255)
 		
 		
 #http://bogdan.students.wmi.amu.edu.pl/education/python%20i%20django/Django_3.html

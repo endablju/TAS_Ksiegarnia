@@ -17,7 +17,9 @@
             </div>
             <div class="new_opinion_button"><a href="/add_opinion/{{book.id}}">Dodaj opinię</a></div>
             {% for opinion in opinions %}
-                    </br><div class="opinion">{{opinion.opinion}}</div>
+                    </br><div class="opinion">
+                    <p class="opinion_aut">Autor: {{opinion.user_name}}</p>
+                    {{opinion.opinion}}</div>
             {% endfor %}
 
             <div class="cleaner_with_height">&nbsp;</div>

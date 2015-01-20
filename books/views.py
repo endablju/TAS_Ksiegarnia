@@ -351,7 +351,8 @@ def add_opinion(request, pk):
         if form.is_valid():
 			books_book_opinion = Opinion(
 				opinion = form.cleaned_data['opinion'],
-				book_id=pk
+				book_id=pk,
+				user_name=form.cleaned_data['user_name']
 			)
 			books_book_opinion.save()
 			template = get_template("page/add_opinion_succes.html")    

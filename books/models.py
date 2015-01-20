@@ -43,5 +43,6 @@ class Basket(models.Model):
 class Opinion(models.Model):
     book_id = models.IntegerField('Id książki')
     opinion = models.CharField('Twoja opinia', max_length=255)
+    user_name = models.CharField('Autor', max_length=255)
 
 	
