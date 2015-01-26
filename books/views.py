@@ -12,10 +12,14 @@ from books.forms import *
 from books.serializers import *
 from jsonrpc import jsonrpc_method
 import xmlrpclib
+import Pyro4
 
 # Create an object to represent our server.
 server_url = 'http://127.0.0.1:8001';
 server = xmlrpclib.Server(server_url);
+
+p_server_name="pyro.server"
+p_server=Pyro4.Proxy("PYRONAME:"+p_server_name)
 
 def index(request):
 	template = get_template("index.html") 
@@ -355,6 +359,9 @@ def add_opinion(request, pk):
 				user_name=form.cleaned_data['user_name']
 			)
 			books_book_opinion.save()
+
+			p_server.add_opinion(book_id,opinion,user_name)
+
 			template = get_template("page/add_opinion_succes.html")    
 			variables = RequestContext(request,{'form':form,'book':book})
 			output = template.render(variables)
