@@ -20,6 +20,11 @@
                     </br><div class="opinion">
                     <p class="opinion_aut">Autor: {{opinion.user_name}}</p>
                     {{opinion.opinion}}</div>
+                    {% if user.is_authenticated %} 
+                        {% if user.is_superuser%}
+                        <a href="/del_opinion/{{opinion.id}}">Usuń</a>
+                        {% endif %}
+                    {% endif %}
             {% endfor %}
 
             <div class="cleaner_with_height">&nbsp;</div>

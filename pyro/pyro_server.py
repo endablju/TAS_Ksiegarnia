@@ -11,11 +11,11 @@ class PyroServer(object):
             cursor = db.cursor()
             cursor.execute(sql,(book_id,opinion,user_name))
             db.commit()
-            print "1"
-            return "TRUE"  
+            print "Dodano"
+            return 1  
         except:
-            print "0"
-            return "FALSE"        
+            print "Problem z dodaniem"
+            return 0        
             db.rollback()
         finally:
             cursor.close()
@@ -28,9 +28,11 @@ class PyroServer(object):
             cursor = db.cursor()
             cursor.execute(sql,(id,))
             db.commit()
-            print "1"
+            print "Usunięto"
+            return 1
         except:
-            print "0"
+            print "Problem z usunięciem"
+            return 0
         finally:
             cursor.close()
             db.close()
