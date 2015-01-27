@@ -25,10 +25,10 @@ def add_book(title,autor,slug,text,price,quantity):
         cursor = db.cursor()
         cursor.execute(sql,(title,slug,text,autor,price,quantity))
         db.commit()
-        print "1"
+        print "Dodałem książke"
         return "TRUE"  
     except:
-        print "0"
+        print "Nie dodałem książki. Błąd"
         return "FALSE"        
         db.rollback()
     finally:
@@ -43,9 +43,11 @@ def delete_book(id):
         cursor = db.cursor()
         cursor.execute(sql,(id,))
         db.commit()
-        print "1"
+        print "Usunąlem książke"
+        return "TRUE"  
     except:
-        print "0"
+        print "Nie udało się usunąć książki. Błąd"
+        return "FALSE"     
     finally:
         cursor.close()
         db.close()
@@ -57,9 +59,11 @@ def add_category(name):
         cursor = db.cursor()
         cursor.execute(sql,(name,))
         db.commit()
-        print "1"
+        print "Dodałem kategorie"
+        return "TRUE"  
     except:
-        print "0"
+        print "Nie dodałem kategorii. Błąd"
+        return "FALSE"     
         db.rollback()
     finally:
         cursor.close()
@@ -73,11 +77,11 @@ def update_book(title,autor,slug,text,price,quantity,id):
         db = MySQLdb.connect("db4free.net", "ksiegarnia", "tas_projekt", "tasksiegarnia")
         cursor = db.cursor()
         cursor.execute(sql,(title,autor,slug,text,price,quantity,id,))
-        print "1"
-        db.commit()
-        
+        print "Edytowałem"
+        return "TRUE"  
     except:
-        print "0"
+        print "Nie udało się zedytować książki. Błąd"
+        return "FALSE"     
         db.rollback()
     finally:
         cursor.close()

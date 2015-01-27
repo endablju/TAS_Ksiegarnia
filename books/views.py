@@ -111,8 +111,11 @@ def add_book_rpc(request):
 def delete_book_page_rpc(request):
     if request.method == 'POST':
         id = request.POST['id']
-        server.delete_book(id)
-        template = get_template("admin.html")
+        zmienna = server.delete_book(id)
+        if (zmienna == "TRUE"):
+            template = get_template("page/delete_book_succes.html")
+        else:
+            template = get_template("page/delete_book_fail.html")
         books = Book.objects.all()  #TUTAJ!!
         categories = Category.objects.all()  #TUTAJ!!
         variables = RequestContext(request,{'categories':categories,'books':books})                
@@ -141,10 +144,17 @@ def edit_book_page_rpc(request):
             price = request.POST['price']
             quantity = request.POST['quantity']
             if len(id) == 0:
-                server.add_book(title,autor,slug,text,price,quantity)
+                zmienna = server.add_book(title,autor,slug,text,price,quantity)
+                if (zmienna == "TRUE"):
+                    template = get_template("page/add_book_succes.html")
+                else:
+                    template = get_template("page/add_book_fail.html")
             else:
-                server.update_book(title,autor,slug,text,price,quantity,id)
-            template = get_template("admin.html")
+                zmienna = server.update_book(title,autor,slug,text,price,quantity,id)
+                if (zmienna == "TRUE"):
+                    template = get_template("page/edit_book_succes.html")
+                else:
+                    template = get_template("page/edit_book_fail.html")
             books = Book.objects.all()  #TUTAJ!!
             categories = Category.objects.all() #TUTAJ!!
             variables = RequestContext(request,{'categories':categories,'books':books})                
