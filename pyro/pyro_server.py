@@ -28,10 +28,10 @@ class PyroServer(object):
             cursor = db.cursor()
             cursor.execute(sql,(id,))
             db.commit()
-            print "Usunięto"
+            print "Usunieto"
             return 1
         except:
-            print "Problem z usunięciem"
+            print "Problem z usunieciem"
             return 0
         finally:
             cursor.close()
